@@ -9,61 +9,34 @@
 
 import java.util.Scanner;
 
-abstract class Room {
-    protected int numberOfBeds;
-    protected int squareFeet;
-    protected double pricePerNight;
+import java.util.*;
 
-    public Room(int numberOfBeds, int squareFeet, double pricePerNight) {
-        this.numberOfBeds = numberOfBeds;
-        this.squareFeet = squareFeet;
-        this.pricePerNight = pricePerNight;
-    }
-
-    public void displayRoomDetails() {
-        System.out.println("Beds: " + numberOfBeds);
-        System.out.println("Size: " + squareFeet + " sqft");
-        System.out.println("Price per night: " + pricePerNight);
-    }
-}
-
-// Concrete room classes
-class SingleRoom extends Room {
-    public SingleRoom() { super(1, 250, 1500.0); }
-}
-
-class DoubleRoom extends Room {
-    public DoubleRoom() { super(2, 400, 2500.0); }
-}
-
-class SuiteRoom extends Room {
-    public SuiteRoom() { super(3, 750, 5000.0); }
-}
-
-// Main class must be public
 public class BookMyStayApp {
+    private Map<String, Integer> roomAvailability;
+
+    public BookMyStay() {
+        initializeInventory();
+    }
+
+    private void initializeInventory() {
+        roomAvailability = new HashMap<>();
+        roomAvailability.put("Single Room", 5);
+        roomAvailability.put("Double Room", 3);
+        roomAvailability.put("Suite Room", 2);
+    }
+
+    public Map<String, Integer> getRoomAvailability() {
+        return roomAvailability;
+    }
+
+    public void updateAvailability(String roomType, int count) {
+        roomAvailability.put(roomType, count);
+    }
+
     public static void main(String[] args) {
-        // Availability variables
-        int singleAvailable = 5;
-        int doubleAvailable = 3;
-        int suiteAvailable = 2;
-
-        // Room objects
-        Room single = new SingleRoom();
-        Room doubleR = new DoubleRoom();
-        Room suite = new SuiteRoom();
-
-        // Display details
-        System.out.println("Single Room:");
-        single.displayRoomDetails();
-        System.out.println("Available: " + singleAvailable + "\n");
-
-        System.out.println("Double Room:");
-        doubleR.displayRoomDetails();
-        System.out.println("Available: " + doubleAvailable + "\n");
-
-        System.out.println("Suite Room:");
-        suite.displayRoomDetails();
-        System.out.println("Available: " + suiteAvailable);
+        BookMyStay inventory = new BookMyStay();
+        System.out.println(inventory.getRoomAvailability());
+        inventory.updateAvailability("Single Room", 4);
+        System.out.println(inventory.getRoomAvailability());
     }
 }
